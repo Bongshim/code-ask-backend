@@ -1,0 +1,12 @@
+module.exports.userController = require('./user.controller');
+module.exports.authController = require('./auth.controller');
+module.exports.discussionController = require('./discussion.controller');
+module.exports.tagController = require('./tag.controller');
+module.exports.questionController = require('./question.controller');
+module.exports.answerController = require('./answer.controller');
+module.exports.answerCommentController = require('./answerComment.controller');
+module.exports.questionCommentController = require('./questionComment.controller');
+module.exports.commentController = require('./comment.controller');
+module.exports.discussionReplyController = require('./discussionReply.controller');
+module.exports.discussionReplyNestedController = require('./discussionReplyNested.controller');
+module.exports.searchController = require('./search.controller');

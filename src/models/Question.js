@@ -10,7 +10,6 @@ exports.Question = sequelize.define("Question", {
         }
       },
     body: {
-        type: DataTypes.STRING(1000),
-        allowNull: false,
+        type: DataTypes.TEXT('long'),
       },
 })

@@ -40,7 +40,7 @@ const acceptAnswer = catchAsync(async (req, res) => {
 });
 
 const deleteAnswer = catchAsync(async (req, res) => {
-  await answerService.deleteAnswerById(req.params.answerId);
+  await answerService.deleteAnswerById(req.params.answerId, req.userId);
   res.status(httpStatus.OK).json({ success: 'Deleted' });
 });
 

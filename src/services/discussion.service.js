@@ -31,6 +31,7 @@ const getDiscussions = async () => {
         include: [{ model: Discussion_Reply_Nested, attributes: ['id', 'content', 'UserId'] }],
       },
     ],
+    order: [['createdAt', 'DESC']],
   });
   return discussions;
 };

@@ -1,6 +1,7 @@
+const httpStatus = require('http-status');
+const { User } = require('../models/User');
 const { Discussion_Reply } = require('../models/Discussion_reply');
 const { Discussion_Reply_Nested } = require('../models/Discussion_reply_nested');
-const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
 const logger = require('../config/logger');
 const { getUserById } = require('./user.service');
@@ -22,7 +23,10 @@ const createDiscussionReply = async (userId, discussionReplyBody) => {
  */
 const getDiscussionReplies = async () => {
   return await Discussion_Reply.findAll({
-    include: [{ model: Discussion_Reply_Nested, attributes: ['id', 'content', 'UserId'] }],
+    include: [
+      { model: User, attributes: ['profile_image', 'username'] },
+      { model: Discussion_Reply_Nested, attributes: ['id', 'content', 'UserId'] },
+    ],
   });
 };
 
@@ -33,7 +37,10 @@ const getDiscussionReplies = async () => {
  */
 const getDiscussionReplyById = async (discussionReplyId) => {
   const discussionReply = await Discussion_Reply.findByPk(discussionReplyId, {
-    include: [{ model: Discussion_Reply_Nested, attributes: ['id', 'content', 'UserId'] }],
+    include: [
+      { model: User, attributes: ['profile_image', 'username'] },
+      { model: Discussion_Reply_Nested, attributes: ['id', 'content', 'UserId'] },
+    ],
   });
   if (!discussionReply) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Reply not found');

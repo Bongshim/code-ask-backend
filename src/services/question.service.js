@@ -122,7 +122,7 @@ const getUnansweredQuestions = async () => {
         attributes: [],
       },
     ],
-    where: Sequelize.where(Sequelize.col('answers.QuestionId'), 'IS', null),
+    where: Sequelize.where(Sequelize.col('Answers.QuestionId'), 'IS', null),
   });
 };
 

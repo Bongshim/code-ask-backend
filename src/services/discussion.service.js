@@ -41,14 +41,16 @@ const getDiscussions = async () => {
  * @param {ObjectId} discussionId
  * @returns {Promise<Discussion>}
  */
-const getDiscussionById = async (discussionId) => {
+ const getDiscussionById = async (discussionId) => {
   const discussion = await Discussion.findByPk(discussionId, {
     include: [
       { model: User, attributes: ['profile_image', 'username'] },
       {
         model: Discussion_Reply,
-        attributes: ['id', 'content', 'UserId'],
-        include: [{ model: Discussion_Reply_Nested, attributes: ['id', 'content', 'UserId'] }],
+        include: [
+          { model: Discussion_Reply_Nested, include: [{ model: User, attributes: ['profile_image', 'username'] }] },
+          { model: User, attributes: ['profile_image', 'username'] },
+        ],
       },
     ],
   });

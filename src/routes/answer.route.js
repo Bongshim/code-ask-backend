@@ -21,4 +21,5 @@ router.route('/:answerId/upvote').patch(auth(), validate(answerValidation.upvote
 router.route('/:answerId/downvote').patch(auth(), validate(answerValidation.downvoteAnswer), answerController.downvoteAnswer);
 router.route('/:answerId/accepted').patch(auth(), validate(answerValidation.acceptedAnswer), answerController.acceptAnswer);
 
+router.route('/user/:userId').get(auth(), answerController.getAnswersByUser);
 module.exports = router;

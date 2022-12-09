@@ -1,6 +1,7 @@
 const { Answer } = require('../models/Answer');
 const { Question } = require('../models/Question');
 const { Downvote } = require('../models/User_downvotes');
+const { User } = require('../models/User');
 const { Upvote } = require('../models/User_upvote');
 const { Comment } = require('../models/Comment');
 const httpStatus = require('http-status');
@@ -47,6 +48,23 @@ const getAnswerById = async (answerId) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'Answer not found');
   }
   return answer;
+};
+
+/**
+ * Get all answers asked by user
+ * @returns {Promise<Answers>}
+ */
+const getAnswersByUser = async (userId) => {
+  const user = await getUserById(userId);
+
+  return await Answer.findAll({
+    where: { UserId: user.id },
+    include: [
+      { model: User, attributes: ['profile_image', 'username'] },
+      { model: Comment, attributes: ['id', 'comment', 'UserId'], through: { attributes: [] } },
+    ],
+    order: [['createdAt', 'DESC']],
+  });
 };
 
 /**
@@ -157,5 +175,6 @@ module.exports = {
   downvoteAnswer,
   getAnswerById,
   updateAnswerById,
+  getAnswersByUser,
   deleteAnswerById,
 };

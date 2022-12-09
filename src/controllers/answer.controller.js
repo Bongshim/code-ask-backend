@@ -19,6 +19,11 @@ const getAnswer = catchAsync(async (req, res) => {
   res.status(httpStatus.OK).json(answer);
 });
 
+const getAnswersByUser = catchAsync(async (req, res) => {
+  const answers = await answerService.getAnswersByUser(req.params.userId);
+  res.status(httpStatus.OK).json(answers);
+});
+
 const updateAnswer = catchAsync(async (req, res) => {
   await answerService.updateAnswerById(req.params.answerId, req.body, req.userId);
   res.status(httpStatus.OK).json({ success: 'Updated' });
@@ -53,4 +58,5 @@ module.exports = {
   upvoteAnswer,
   downvoteAnswer,
   acceptAnswer,
+  getAnswersByUser,
 };

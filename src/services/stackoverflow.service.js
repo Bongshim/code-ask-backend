@@ -1,4 +1,6 @@
 const { axiosCall } = require('../helpers/axiosCall');
+const ApiError = require('../utils/ApiError');
+const httpStatus = require('http-status');
 const logger = require('../config/logger');
 
 /**
@@ -21,7 +23,7 @@ const getStackOverflowAnswerIds = async (questionIds) => {
         answerIds.push(`https://stackoverflow.com/a/${item.answer_id}`);
       });
       } catch (error) {
-        console.log(error)
+        throw new ApiError(httpStatus.BAD_REQUEST, error.response)
       }
       
     })
@@ -45,8 +47,7 @@ const searchStackOverflow = async (string) => {
 
   return answerIds;
   } catch (error) {
-    console.log(error)
-
+ throw new ApiError(httpStatus.BAD_REQUEST, error.response)
   }
   
 };

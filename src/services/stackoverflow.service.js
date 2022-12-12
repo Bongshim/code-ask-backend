@@ -11,7 +11,8 @@ const getStackOverflowAnswerIds = async (questionIds) => {
 
   await Promise.all(
     questionIds.map(async (id) => {
-      const response = await axiosCall.get(
+      try {
+        const response = await axiosCall.get(
         `https://api.stackexchange.com/2.3/questions/${id}/answers?order=desc&sort=activity&site=stackoverflow`
       );
       const eachId = response.data.items;
@@ -19,6 +20,10 @@ const getStackOverflowAnswerIds = async (questionIds) => {
       eachId.map(async (item) => {
         answerIds.push(`https://stackoverflow.com/a/${item.answer_id}`);
       });
+      } catch (error) {
+        console.log(error)
+      }
+      
     })
   );
 
@@ -31,13 +36,19 @@ const getStackOverflowAnswerIds = async (questionIds) => {
  * @return {promise<result>}
  */
 const searchStackOverflow = async (string) => {
-  const response = await axiosCall.get(`/2.3/search/excerpts?order=desc&sort=votes&body=${string}&site=stackoverflow`);
+  try {
+    const response = await axiosCall.get(`/2.3/search/excerpts?order=desc&sort=votes&body=${string}&site=stackoverflow`);
   const result = response.data.items;
   const filtered = result.filter((result) => result?.answer_count > 0);
   const questionIds = filtered.map((item) => item.question_id);
   const answerIds = await getStackOverflowAnswerIds(questionIds);
 
   return answerIds;
+  } catch (error) {
+    console.log(error)
+
+  }
+  
 };
 
 module.exports = { searchStackOverflow };

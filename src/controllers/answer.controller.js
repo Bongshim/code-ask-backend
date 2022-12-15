@@ -40,7 +40,7 @@ const downvoteAnswer = catchAsync(async (req, res) => {
 });
 
 const acceptAnswer = catchAsync(async (req, res) => {
-  await answerService.acceptAnswer(req.params.answerId);
+  await answerService.acceptAnswer(req.params.answerId, req.userId);
   res.status(httpStatus.OK).json({ success: 'Done' });
 });
 

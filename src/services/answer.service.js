@@ -137,14 +137,14 @@ const downvoteAnswer = async (answerId, userId) => {
  * @param {ObjectId} answerId
  * @returns {Promise<Answer>}
  */
-const acceptAnswer = async (answerId) => {
+const acceptAnswer = async (answerId, userId) => {
   const answer = await Answer.findByPk(answerId);
   if (!answer) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Answer not found');
   }
   return answer.accepted == false
-    ? await updateAnswerById(answerId, { accepted: true })
-    : await updateAnswerById(answerId, { accepted: false });
+    ? await updateAnswerById(answerId, { accepted: true }, userId)
+    : await updateAnswerById(answerId, { accepted: false }, userId);
 };
 
 /**
